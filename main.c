@@ -42,16 +42,24 @@ void SendStringInput(const char* str) {
              inputs[1].ki.dwFlags = KEYEVENTF_KEYUP;
              SendInput(2, inputs, sizeof(INPUT));
         }
+        Sleep(2);
         str++;
     }
 
-    INPUT enter[2] = {0};
-    enter[0].type = INPUT_KEYBOARD;
-    enter[0].ki.wVk = VK_RETURN;
-    enter[1].type = INPUT_KEYBOARD;
-    enter[1].ki.wVk = VK_RETURN;
-    enter[1].ki.dwFlags = KEYEVENTF_KEYUP;
-    SendInput(2, enter, sizeof(INPUT));
+    Sleep(10);
+
+    INPUT enterDown = {0};
+    enterDown.type = INPUT_KEYBOARD;
+    enterDown.ki.wVk = VK_RETURN;
+    SendInput(1, &enterDown, sizeof(INPUT));
+
+    Sleep(5);
+
+    INPUT enterUp = {0};
+    enterUp.type = INPUT_KEYBOARD;
+    enterUp.ki.wVk = VK_RETURN;
+    enterUp.ki.dwFlags = KEYEVENTF_KEYUP;
+    SendInput(1, &enterUp, sizeof(INPUT));
 }
 
 unsigned __stdcall WorkerProc(void* pArgs) {
